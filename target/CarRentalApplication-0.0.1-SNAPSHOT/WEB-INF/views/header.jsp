@@ -6,28 +6,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Car Rental Application</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-<link href="<c:url value="/resources/css/style.css"/>" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link href="<c:url value="/resources/css/style.css"/>" rel="stylesheet">
 <link href="<c:url value="/resources/font-awesome/css/font-awesome.css"/>" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
 
 </head>
 
 <body>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script
-  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-  crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>	
 	
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<!-- 	<nav class="navbar navbar-inverse">
 		<a class="navbar-brand" href="homepage.html">Car Rental Company</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    			<span class="navbar-toggler-icon"></span>
- 			 </button>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        		<span class="sr-only">Toggle navigation</span>
+       		 	<span class="icon-bar"></span>
+        		<span class="icon-bar"></span>
+        		<span class="icon-bar"></span>
+      		</button>
   		<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-   			<ul class="navbar-nav ">
+   			<ul class="nav navbar-nav ">
       			<li class="nav-item">
         			<a class="nav-link" href="newcustomer.html">Add Customer <span class="sr-only">(current)</span></a>
       			</li>
@@ -45,6 +44,33 @@
       			</li>
     		</ul>
   		</div>
-	</nav>
+	</nav> -->
+	
+<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+       	 	<span class="sr-only">Toggle navigation</span>
+        	<span class="icon-bar"></span>
+        	<span class="icon-bar"></span>
+        	<span class="icon-bar"></span>
+      	</button>
+      	<a class="navbar-brand" href="homepage.html">Mavericks Car Rental </a>
+    </div>
+    <div class="collapse navbar-collapse justify-content-end" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="newcustomer.html">Add Customer <span class="sr-only">(current)</span></a></li>
+      	<li><a href="newcar.html">Add Car</a></li>
+      	<li><a href="rentcar.html">Rent a Car</a></li>
+      	<li><a href="updaterental.html">Update Rental Rates</a></li>
+      	<li><a href="report.html">Weekly Report</a></li>
+      	<li><a href="catalog.html">Catalog</a></li>
+      	<li><a href="uploaddata.html">Upload Data</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+	
 </body>
 </html>

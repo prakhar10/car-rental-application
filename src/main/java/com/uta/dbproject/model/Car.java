@@ -7,12 +7,13 @@ public class Car {
 	private String year;
 	private String ownedBy;
 	private String type;
+	private String ownerName;
 	private String dailyRate;
 	private String weeklyRate;
 	
 	public Car() {}
 	
-	public Car(String vehicleId, String model, String year, String ownedBy, String type, String dailyRate,
+	public Car(String vehicleId, String model, String year, String ownedBy, String type,String ownerName, String dailyRate,
 			String weeklyRate) {
 		super();
 		this.vehicleId = vehicleId;
@@ -20,8 +21,17 @@ public class Car {
 		this.year = year;
 		this.ownedBy = ownedBy;
 		this.type = type;
+		this.ownerName = ownerName;
 		this.dailyRate = dailyRate;
 		this.weeklyRate = weeklyRate;
+	}
+	
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
 	}
 	
 	public String getVehicleId() {
@@ -66,10 +76,12 @@ public class Car {
 	public void setWeeklyRate(String weeklyRate) {
 		this.weeklyRate = weeklyRate;
 	}
+
 	@Override
 	public String toString() {
 		return "Car [vehicleId=" + vehicleId + ", model=" + model + ", year=" + year + ", ownedBy=" + ownedBy
-				+ ", type=" + type + ", dailyRate=" + dailyRate + ", weeklyRate=" + weeklyRate + "]";
+				+ ", type=" + type + ", ownerName=" + ownerName + ", dailyRate=" + dailyRate + ", weeklyRate="
+				+ weeklyRate + "]";
 	}
 	
 }

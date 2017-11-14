@@ -1,28 +1,32 @@
-.navbar-brand{
-	float: none;
-}
+/* .navbar-brand{
+	padding: 0;
+} */
 
 .nav-pills{
 	margin-top: 10px;
 	text-align: left;
 }
 
+.collapse{
+	justify-content: end;
+}
 .tab-content{
 	margin: 10px;
 	
 }
 
-li{
+/* li{
 	font-size: 15px;
-}
+} */
 
-.navbar-brand{
-	font-size: 20px;
+.file {
+  visibility: hidden;
+  position: absolute;
 }
 
 .img-parallax{
     margin-top : 50px;
-    background-image: url("src/webapp/resources/images/car.jpg");
+    background-image: url("/resources/images/car.jpg");
     min-height: 550px; 
     background-attachment: fixed;
     background-position: center;
