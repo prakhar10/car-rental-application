@@ -52,7 +52,7 @@
 									<select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0"
 										id="inlineFormCustomSelect" name="type"
 										onchange="getAvailableCars(this.value)">
-										<option selected>Select</option>
+										<option selected></option>
 										<option value="Compact">Compact</option>
 										<option value="Medium">Medium</option>
 										<option value="Large">Large</option>
@@ -118,7 +118,7 @@ function getAvailableCars(str) {
             	console.log('response success ajax call');
             	//$('.carDropDown').html('');
             	$.each(data,function(index,car){
-            		$('.tablebody').append("<tr><td><input type='radio' name='radio'></td><td>"+car.model+"</td><td>"+car.type+"</td><td>"+car.vehicleId+"</td><td>"+car.dailyRate+"</td><td>"+car.weeklyRate+"</td></tr>");
+            		$('.tablebody').append("<tr><td><input type='radio' name='radioBtn'></td><td>"+car.model+"</td><td>"+car.type+"</td><td>"+car.vehicleId+"</td><td>"+car.dailyRate+"</td><td>"+car.weeklyRate+"</td></tr>");
             	}); 
             	$('.btn').show();
             },
@@ -128,6 +128,16 @@ function getAvailableCars(str) {
             }
         });
     }
+    
+$(document).on('change', ':radio[name="radioBtn"]', function () {
+    var arOfVals = $(this).parent().nextAll().map(function () {
+        return $(this).text();
+    }).get();
+    console.log("array:"+arOfVals);
+    console.log("td:"+arOfVals[0]);
+});    
+    
+    
 </script>
 </body>
 </html>

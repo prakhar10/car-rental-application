@@ -129,6 +129,13 @@ public class HomePageController {
 		return new ModelAndView("updaterental");
 	}
 	
+
+	@RequestMapping(value="/report.html",method = RequestMethod.GET)
+	public ModelAndView getReport() {
+		System.out.println("inside report controller");
+		return new ModelAndView("report");
+	}
+	
 	@RequestMapping(value="/uploaddata.html",method = RequestMethod.GET)
 	public ModelAndView uploadData() {
 		System.out.println("inside update rental controller");
