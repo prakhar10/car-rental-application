@@ -2,6 +2,7 @@ package com.uta.dbproject.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,6 +27,7 @@ import com.google.gson.JsonSerializer;
 import com.uta.dbproject.model.Car;
 import com.uta.dbproject.model.Customer;
 import com.uta.dbproject.model.Rental;
+import com.uta.dbproject.services.CarServiceImpl;
 import com.uta.dbproject.services.CustomerServiceImpl;
 
 import net.sf.json.JSON;
@@ -36,6 +38,9 @@ public class HomePageController {
 
 	@Autowired
 	CustomerServiceImpl customerService;
+	
+	@Autowired
+	CarServiceImpl carService;
 
 	@RequestMapping(value = "/homepage.html", method = RequestMethod.GET)
 	public ModelAndView showIndexPage() {
@@ -51,8 +56,14 @@ public class HomePageController {
 
 	@RequestMapping(value = "/savecustomer.html", method = RequestMethod.POST)
 	public ModelAndView saveNewCustomer(@ModelAttribute("customer") Customer customer, ModelMap model) {
-		System.out.println("inside save new customer controller" + customer.toString());
-		model.addAttribute("submitMessage", "Customer saved successfully.");
+		
+		int result = customerService.saveCustomerInfo(customer);
+		
+		if(result == 1) {
+			model.addAttribute("submitMessage", "Customer saved successfully.");
+		}else {
+			model.addAttribute("submitMessage", "Failed to save customer details.");
+		}
 		return new ModelAndView("newcustomer");
 	}
 
@@ -65,52 +76,48 @@ public class HomePageController {
 	@RequestMapping(value = "/savecar.html", method = RequestMethod.POST)
 	public ModelAndView saveNewCar(@ModelAttribute("car") Car car, ModelMap model) {
 		System.out.println("inside save new car controller" + car.toString());
-		model.addAttribute("submitMessage", "New car saved successfully.");
+		
+		int result = carService.saveCarInfoService(car);
+		if(result == 1) {
+			model.addAttribute("submitMessage", "New car saved successfully.");
+		}else {
+			model.addAttribute("submitMessage", "Failed to save car details.");
+
+		}
 		return new ModelAndView("newcar");
 	}
 
 	@RequestMapping(value = "/rentcar.html", method = RequestMethod.GET)
-	public ModelAndView getRentCarPage() {
+	public ModelAndView getRentCarPage(ModelMap model) {
 		System.out.println("inside rent a car controller");
 		return new ModelAndView("rentcar");
 	}
-
+	
 	@RequestMapping(value = "/saverentcar.html", method = RequestMethod.POST)
 	public ModelAndView saveRentCarDetails(@ModelAttribute("rentcar") Rental rental, ModelMap mode) {
 		return new ModelAndView("rentcar");
 	}
 
+	@RequestMapping(value = "/getcustomers.html", method = RequestMethod.GET)
+	public @ResponseBody String getCustomers(HttpServletRequest request,ModelMap model) {
+		System.out.println("inside get customers controller :"+request.getParameter("customerTypeId"));
+		String customerType = request.getParameter("customerTypeId");
+		List<String> customerList = customerService.getAllCustomers(customerType);
+		JSON json = JSONSerializer.toJSON(customerList);
+		return json.toString();
+	}
+	
 	@RequestMapping(value = "/testAjax.html", method = RequestMethod.GET)
 	public @ResponseBody String testAjax(HttpServletRequest request, ModelMap model) {
 		String carType = request.getParameter("dropdownvalue");
 		System.out.println("ajax call success:" + carType);
 		// TODO
 		// fetch data from database for cars which are avaible for rent
-
-		// dummy data
-		Car car = new Car();
-		car.setModel("Ford Fusion");
-		car.setType("SUV");
-		car.setDailyRate("10");
-		car.setOwnedBy("Company");
-		car.setOwnerName("Google");
-		car.setWeeklyRate("50");
-		car.setVehicleId("AB5432");
-
-		Car car2 = new Car();
-		car2.setModel("Maruti");
-		car2.setType("Compact");
-		car2.setDailyRate("6");
-		car2.setOwnedBy("Individual");
-		car2.setOwnerName("Prakhar");
-		car2.setWeeklyRate("20");
-		car2.setVehicleId("XS9032");
-
-		List<Car> carList = new ArrayList<Car>();
-		carList.add(car);
-		carList.add(car2);
+		List<Map<String,Object>> carList = carService.getAvailableCars(carType);
 
 		JSON json = JSONSerializer.toJSON(carList);
+		System.out.println("JSon : "+json.toString());
+		
 		return json.toString();
 	}
 

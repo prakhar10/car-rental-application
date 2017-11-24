@@ -47,9 +47,9 @@
 									 <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0"
 										id="inlineFormCustomSelect" name="ownedBy">
 										<option value=""></option>
+										<option value="Individual">Individual</option>
 										<option value="Company">Company</option>
 										<option value="Bank">Bank</option>
-										<option value="Individual">Individual</option>
 									</select> 
 									</div>
 							</div>
@@ -73,26 +73,11 @@
 									type="text" class="form-control" id="inputOwnerName"
 									name="ownerName" placeholder="Enter Owner Name" />
 							</div>
-							<div class="form-group">
-								<label for="labelDailyRate">Daily Rate</label>
-									<div class="input-group">
-  									<span class="input-group-addon">$</span>
-  									<input type="text" class="form-control dailyRate" name="dailyRate"aria-label="Amount (to the nearest dollar)">
-							</div>
-							</div>
-							<div class="form-group">
-								<label for="labelPhNumber">Weekly Rate</label>
-									<div class="input-group">
-  									<span class="input-group-addon">$</span>
-  									<input type="text" class="form-control dailyRate" name="dailyRate"aria-label="Amount (to the nearest dollar)">
-							</div>
-							</div>
 							<div>
 								<button type="submit" class="btn btn-primary"
 									style="margin-left: 20px; display: inline">Submit</button>
 								<h5 style="display: inline; font-size: 15px">${submitMessage}</h5>
 							</div>
-
 						</form>
 					</div>
 				</div>

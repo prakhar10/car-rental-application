@@ -40,38 +40,43 @@
 									placeholder="Enter your address" />
 							</div>
 							<div class="form-group">
-								<label for="labelAge">Age</label> <input type="text"
-									class="form-control" id="inputAge" name="age"
-									placeholder="Enter your age" />
-							</div>
-							<div class="form-group">
 								<label for="labelPhNumber">Phone Number</label> <input
 									type="text" class="form-control" id="inputPhNumber"
 									name="phoneNumber" placeholder="Enter your phone number" />
 							</div>
-							<div class="form-group">
+							<label class="radio-inline" id="radio1"> <input
+								class="form-check-input" type="radio" name="type"
+								id="radioIndividual" value="individual">Individual
+							</label>
+							<label class="radio-inline" id="radio2"> <input
+								class="form-check-input" type="radio" name="type"
+								id="radioCompany" value="company">Company
+							</label>
+							
+							<div class="form-group license" style="margin-top: 10px">
 								<label for="labelLicenseNo">License Number</label> <input
 									type="text" class="form-control" id="inputLicenseNo"
 									name="licenseNo" placeholder="Enter your license number" />
 							</div>
-							<label class="radio-inline" id="radio1"> <input
-								class="form-check-input" type="radio" name="type"
-								id="radioIndividual" value="individual">Individual
-							</label> <label class="radio-inline" id="radio2"> <input
-								class="form-check-input" type="radio" name="type"
-								id="radioCompany" value="company">Company
-							</label>
 							<div>
 								<button type="submit" class="btn btn-primary"
 									style="margin-left: 20px; margin-top: 10px; display: inline">Submit</button>
 								<h5 style="display: inline; font-size: 15px">${submitMessage}</h5>
 							</div>
-
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+<script>
+	$(".license").hide();
+	$("#radio1").click(function(){
+		$(".license").show();
+	});
+	$("#radio2").click(function(){
+		$(".license").hide();
+	});
+</script>
 </body>
 </html>

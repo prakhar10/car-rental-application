@@ -24,6 +24,8 @@
 	</bean>
 	<bean id="customerService" class="com.uta.dbproject.services.CustomerServiceImpl"></bean>
 	<bean id="customerDao" class="com.uta.dbproject.dao.CustomerDaoImpl"></bean>
+	<bean id="carService" class="com.uta.dbproject.services.CarServiceImpl"></bean>
+	<bean id="carDao" class="com.uta.dbproject.dao.CarDaoImpl"></bean>
 	
 	<bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate" >
    		 <constructor-arg ref="dataSource"/>

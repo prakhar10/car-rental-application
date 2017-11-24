@@ -20,28 +20,33 @@
 
 <jsp:include page="header.jsp" />
 
-<table class="table table-bordered">
-	<thead>
-		<tr>
-			<th>#</th>
-			<th>Customer Name</th>
-			<th>Car model</th>
-			<th>Total days</th>
-			<th>Amount</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>1</td>
-			<td>Prakhar</td>
-			<td>Hyundai i20</td>
-			<td>3</td>
-			<td>50$</td>
-		</tr>
-	</tbody>
-</table>
-
-<script>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Customer Name</th>
+							<th>Car model</th>
+							<th>Total days</th>
+							<th>Amount</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td>Prakhar</td>
+							<td>Hyundai i20</td>
+							<td>3</td>
+							<td>50$</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<script>
 	$('.table').dataTable();
 </script>
 </body>

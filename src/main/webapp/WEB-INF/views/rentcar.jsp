@@ -26,7 +26,28 @@
 						<h4 class="panel-title" style="text-align: center">Rent a Car</h4>
 					</div>
 					<div class="panel-body">
-						<form class="form-inline" action="saverentcar.html">
+						<form action="saverentcar.html">
+						<div class="form-group">
+							<label for="inlineFormCustomSelect" style="margin-top: 10px">Select Customer Type</label>
+						 	<div>
+						 		<label class="radio-inline" id="radio1" style="margin-left: 0px">
+						 	 		<input	class="form-check-input customerType" type="radio" name="type"
+									id="radioIndividual" value="Individual">Individual
+								</label>
+								<label class="radio-inline " id="radio2"> <input
+									class="form-check-input customerType" type="radio" name="type"
+									id="radioCompany" value="Company">Company
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+								<label class="mr-sm-2" for="inlineFormCustomSelect" style="margin-top: 10px">Select Customer</label>
+								<div class="dropdown">
+									<select class="form-control customer-select mb-2 mr-sm-2 mb-sm-0"
+										id="inlineFormCustomSelect" name="customerName" >
+									</select>
+								</div>
+						</div>
 							<div class="form-group">
 								<label for="labelStartDate">Start Date </label>
 								<div class='input-group date'>
@@ -64,9 +85,7 @@
 							</div>
 
 							<div class="panel panel-primary tablepanel" style="margin:20px;">
-								<!-- Default panel contents -->
 								<div class="panel-heading">Cars Available</div>
-
 								<!-- Table -->
 								<table class="table table-bordered" data-click-to-select="true">
 									<thead>
@@ -75,14 +94,28 @@
 											<th>Car Model</th>
 											<th>Car Type</th>
 											<th>Vehicle Id</th>
-											<th>Daily Rate ($/hour)</th>
-											<th>Weekly Rate ($/hour)</th>	
+											<th> Manufacture Year</th>
+											<th>Daily Rate</th>
+											<th>Weekly Rate</th>	
 										</tr>
 									</thead>
 									<tbody class="tablebody">
 									</tbody>
 								</table>
 							</div>
+							<div class="form-group rentaltype">
+							<label for="inlineFormCustomSelect" style="margin-top: 10px">Select Rental Type</label>
+						 	<div>
+						 		<label class="radio-inline" id="radio3" style="margin-left: 0px">
+						 	 		<input	class="form-check-input" type="radio" name="rentaltype"
+									id="radioDaily" value="Daily">Daily
+								</label>
+								<label class="radio-inline" id="radio4"> <input
+									class="form-check-input" type="radio" name="rentaltype"
+									id="radioWeekly" value="Weekly">Weekly
+								</label>
+							</div>
+						</div>
 								<button class="btn btn-primary" type="submit" value="submit" name="submit">Submit</button>
 						</form>
 					</div>
@@ -109,26 +142,49 @@ function getAvailableCars(str) {
     $.ajax({
         "type" : "GET",
         "url" : "testAjax.html",
-        //"headers": {"Accept": "application/json"},
         "async" : true,
         "dataType": 'json',
         "data" : {
             "dropdownvalue" : str},
             success : function(data) {
-            	console.log('response success ajax call');
-            	//$('.carDropDown').html('');
+            	$('.tablebody').html('');
+            	console.log("size:"+data.length);
             	$.each(data,function(index,car){
-            		$('.tablebody').append("<tr><td><input type='radio' name='radioBtn'></td><td>"+car.model+"</td><td>"+car.type+"</td><td>"+car.vehicleId+"</td><td>"+car.dailyRate+"</td><td>"+car.weeklyRate+"</td></tr>");
+            		$('.tablebody').append("<tr><td><input type='radio' name='radioBtn'></td><td>"+car.model+"</td><td>"+car.carType+"</td><td>"+car.vehicleId+"</td><td>"+car.year+"</td><td>"+car.dailyRate+"</td><td>"+car.weeklyRate+"</td></tr>");
             	}); 
             	$('.btn').show();
             },
-            error : function(request, error,xhr) {
-            	console.log("failure"+error+xhr);
+            error : function(request, error) {
+            	console.log("failure-"+error );
                 alert("error");
             }
         });
     }
-    
+ 
+
+
+$('.customerType').click(function(){
+	var custtype = $("input[name='type']:checked").val();
+	$.ajax({
+        "type" : "GET",
+        "url" : "getcustomers.html",
+        "async" : true,
+        "dataType": 'json',
+        "data" : {"customerTypeId" : custtype},
+            success : function(data) {
+            	$('.customer-select').html('');
+            	$.each(data,function(index,name){
+            		$('.customer-select').append("<option value='name'>"+name+"</option>");
+            	}); 
+            },
+            error : function(request, error) {
+            	console.log("failure"+ error);
+                alert("error");
+            }
+        });
+	
+});
+
 $(document).on('change', ':radio[name="radioBtn"]', function () {
     var arOfVals = $(this).parent().nextAll().map(function () {
         return $(this).text();

@@ -5,20 +5,21 @@ public class Customer {
 	
 	private String name;
 	private String address;
-	private String age;
 	private String licenseNo;
-	private String idNumber;
+	private int idNumber;
 	private String type;
 	private String phoneNumber;
+	private String startDate;
+	private String returnDate;
+	private String vehicleId;
 	
 	public Customer() {}
 	
-	public Customer(String name, String address, String age, String licenseNo, String idNumber, String type,
+	public Customer(String name, String address, String licenseNo, int idNumber, String type,
 			String phoneNumber) {
 		super();
 		this.name = name;
 		this.address = address;
-		this.age = age;
 		this.licenseNo = licenseNo;
 		this.idNumber = idNumber;
 		this.type = type;
@@ -31,14 +32,6 @@ public class Customer {
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public String getAge() {
-		return age;
-	}
-
-	public void setAge(String age) {
-		this.age = age;
 	}
 
 	public String getLicenseNo() {
@@ -55,10 +48,10 @@ public class Customer {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getIdNumber() {
+	public int getIdNumber() {
 		return idNumber;
 	}
-	public void setIdNumber(String idNumber) {
+	public void setIdNumber(int idNumber) {
 		this.idNumber = idNumber;
 	}
 	public String getType() {
@@ -74,10 +67,35 @@ public class Customer {
 		this.phoneNumber = phoneNumber;
 	}
 
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getReturnDate() {
+		return returnDate;
+	}
+
+	public void setReturnDate(String returnDate) {
+		this.returnDate = returnDate;
+	}
+
+	public String getVehicleId() {
+		return vehicleId;
+	}
+
+	public void setVehicleId(String vehicleId) {
+		this.vehicleId = vehicleId;
+	}
+
 	@Override
 	public String toString() {
-		return "Customer [name=" + name + ", address=" + address + ", age=" + age + ", licenseNo=" + licenseNo
-				+ ", idNumber=" + idNumber + ", type=" + type + ", phoneNumber=" + phoneNumber + "]";
+		return "Customer [name=" + name + ", address=" + address + ", licenseNo=" + licenseNo + ", idNumber=" + idNumber
+				+ ", type=" + type + ", phoneNumber=" + phoneNumber + ", startDate=" + startDate + ", returnDate="
+				+ returnDate + ", vehicleId=" + vehicleId + "]";
 	}
 
 }

@@ -41,19 +41,24 @@
 									type="text" class="form-control" id="year" name="year"
 									placeholder="Enter manufacture year" />
 							</div>
-							<div class="form-row align-items-center">
-								<div class="col-auto">
-									<label class="mr-sm-2" for="inlineFormCustomSelect">Owned
-										by</label> <select class="custom-select mb-2 mr-sm-2 mb-sm-0"
+							<div class="form-group">
+									<label class="mr-sm-2" for="inlineFormCustomSelect">Owned By</label>
+									<div class="dropdown">
+									 <select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0"
 										id="inlineFormCustomSelect" name="ownedBy">
-										<option selected>SELECT</option>
+										<option value=""></option>
+										<option value="Individual">Individual</option>
 										<option value="Company">Company</option>
 										<option value="Bank">Bank</option>
-										<option value="Individual">Individual</option>
-									</select> <label class="mr-sm-2" for="inlineFormCustomSelect">Type
-										of Car</label> <select class="custom-select mb-2 mr-sm-2 mb-sm-0"
+									</select> 
+									</div>
+							</div>
+							<div class="form-group">
+								<label class="mr-sm-2" for="inlineFormCustomSelect">Type of Car</label> 
+								<div class="dropdown">
+									<select class=" form-control custom-select mb-2 mr-sm-2 mb-sm-0"
 										id="inlineFormCustomSelect" name="type">
-										<option selected>SELECT</option>
+										<option value=""></option>
 										<option value="Compact">Compact</option>
 										<option value="Medium">Medium</option>
 										<option value="Large">Large</option>
@@ -62,28 +67,17 @@
 										<option value="Van">Van</option>
 									</select>
 								</div>
-								</div>
+							</div>	
 							<div class="form-group" style="margin-top: 10px;">
 								<label for="labelOwnerName">Owner Name</label> <input
 									type="text" class="form-control" id="inputOwnerName"
 									name="ownerName" placeholder="Enter Owner Name" />
-							</div>
-							<div class="form-group">
-								<label for="labelDailyRate">Daily Rate ($/hour)</label> <input
-									type="text" class="form-control" id="inputDailyRate"
-									name="dailyRate" placeholder="Enter daily rate" />
-							</div>
-							<div class="form-group">
-								<label for="labelPhNumber">Weekly Rate ($/hour)</label> <input
-									type="text" class="form-control" id="inputWeeklyRate"
-									name="weeklyRate" placeholder="Enter weekly rate" />
 							</div>
 							<div>
 								<button type="submit" class="btn btn-primary"
 									style="margin-left: 20px; display: inline">Submit</button>
 								<h5 style="display: inline; font-size: 15px">${submitMessage}</h5>
 							</div>
-
 						</form>
 					</div>
 				</div>

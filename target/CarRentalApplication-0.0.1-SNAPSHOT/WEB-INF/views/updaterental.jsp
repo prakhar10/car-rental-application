@@ -33,7 +33,7 @@
 									<select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0"
 										id="inlineFormCustomSelect"
 										name="carType">
-										<option selected>Select</option>
+										<option selected></option>
 										<option value="Compact">Compact</option>
 										<option value="Medium">Medium</option>
 										<option value="Large">Large</option>
@@ -48,7 +48,6 @@
 							<div class="input-group">
   									<span class="input-group-addon">$</span>
   									<input type="text" class="form-control dailyRate" name="dailyRate"aria-label="Amount (to the nearest dollar)">
-  									<span class="input-group-addon">per hour</span>
 							</div>
 						</div>
 						<div class="form-group">
@@ -56,7 +55,6 @@
 							<div class="input-group">
   									<span class="input-group-addon">$</span>
   									<input type="text" class="form-control weeklyRate" name="weeklyRate" aria-label="Amount (to the nearest dollar)">
-  									<span class="input-group-addon">per hour</span>
 							</div>
 						</div>
 								<button class="btn btn-primary" type="submit" value="Submit" name="submit">Submit</button>

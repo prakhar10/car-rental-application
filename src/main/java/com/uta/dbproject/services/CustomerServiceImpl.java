@@ -1,5 +1,7 @@
 package com.uta.dbproject.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.uta.dbproject.dao.CustomerDaoImpl;
@@ -10,13 +12,14 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private CustomerDaoImpl customerDao;
 	
-	public void saveCustomerInfo(String name) {
-		System.out.println("start method saveCustomerInfo");
-		Customer customer = new Customer();
-		customer.setName(name);
-		customerDao.saveCustomerInfo(customer);
-		System.out.println("end method saveCustomerInfo");
-		
+	public int saveCustomerInfo(Customer customer) {
+		int result = customerDao.saveCustomerInfo(customer);
+		return result;
+	}
+
+	@Override
+	public List<String> getAllCustomers(String customerType) {
+		return customerDao.getAllCustomers(customerType);
 	}
 
 }
