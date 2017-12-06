@@ -26,7 +26,7 @@
 						<h4 class="panel-title" style="text-align: center">Update Rental Rates</h4>
 					</div>
 					<div class="panel-body">
-						<form action="saveupdatedrental.html" method="GET">
+						<form action="saveupdatedrental.html" method="post">
 						<div class="form-group">
 								<label class="mr-sm-2" for="inlineFormCustomSelect">Select Car Type</label>
 								<div class="dropdown">

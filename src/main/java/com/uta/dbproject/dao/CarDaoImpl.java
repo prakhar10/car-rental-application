@@ -9,7 +9,11 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import com.uta.dbproject.constants.Constants;
 import com.uta.dbproject.constants.QueryConstants;
 import com.uta.dbproject.model.Car;
+import com.uta.dbproject.model.Rental;
+import com.uta.dbproject.utility.AllCarsMapper;
+import com.uta.dbproject.utility.AmountMapper;
 import com.uta.dbproject.utility.CarMapper;
+import com.uta.dbproject.utility.CustVehicleMapper;
 
 public class CarDaoImpl implements CarDao {	
 
@@ -22,6 +26,9 @@ public class CarDaoImpl implements CarDao {
 		int ownerId = checkOwnerPresent(car);
 		int carType = getCarTypeId(car.getType());
 
+		System.out.println("in save owner id :"+ownerId);
+		System.out.println("in save car type id :"+carType);
+		
 		if(carType != 0 && ownerId != 0) {
 			
 			Map<String,String> carMap = new HashMap<String,String>();
@@ -52,7 +59,10 @@ public class CarDaoImpl implements CarDao {
 		
 		try {
 			ownerList = namedJdbcTemplate.queryForList(QueryConstants.CHECK_OWNER_PRESENT, ownerMap,Integer.class);
+			System.out.println("owner list size:"+ownerList.size());
+			System.out.println("list content:"+ownerList.get(0));
 			ownerId = ownerList.get(0);
+			
 		}catch (Exception e) {
 			System.out.println("Exception while fetching old owner:"+e.getMessage());
 			e.printStackTrace();
@@ -142,13 +152,68 @@ public class CarDaoImpl implements CarDao {
 		carMap.put("status", Constants.AVAILABLE);
 		try {
 			carList = namedJdbcTemplate.query(QueryConstants.GET_AVAILABLE_CARS, carMap, new CarMapper());
-			System.out.println("List size: "+carList.size());
-			System.out.println("value:"+carList.get(0).get("vehicleId"));
 		}catch (Exception e) {
 			System.out.println("Exception while fetching available cars:"+e.getMessage());
 			e.printStackTrace();
 		}
 		
 		return carList;
+	}
+
+	@Override
+	public int updateRentalRate(String carType,String dailyRate, String weeklyRate) {
+		
+		int result=0;
+		Map<String,String> rentalMap = new HashMap<String,String>();
+		rentalMap.put("carType", carType);
+		rentalMap.put("dailyRate", dailyRate);
+		rentalMap.put("weeklyRate", weeklyRate);
+		System.out.println("daily:"+dailyRate+", weekly:"+weeklyRate);
+		try {
+			result = namedJdbcTemplate.update(QueryConstants.UPDATE_RENTAL_RATE, rentalMap);
+		}catch(Exception ex) {
+			System.out.println("Exception caught while updating rental rate:"+ex.getMessage());
+		}
+		return result;
+	}
+
+	@Override
+	public List<Map<String, Object>> getAllCars() {
+		// TODO Auto-generated method stub
+		List<Map<String,Object>> allCarsList = new ArrayList<Map<String,Object>>();
+		
+		try {
+			allCarsList = namedJdbcTemplate.query(QueryConstants.GET_ALL_CAR_DETAILS, new HashMap<String,Object>(), new AllCarsMapper());
+		}catch (Exception e) {
+			System.out.println("Exception while fetching all cars:"+e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return allCarsList;
+		
+	}
+
+	@Override
+	public String returnCar(Rental rental, String customerName) {
+
+		Map<String, String> customerMap = new HashMap<String,String>();
+		int result;
+		customerMap.put("customerName", customerName);
+		List<Map<String,Object>> vehicleIdList = new ArrayList<Map<String,Object>>();
+		List<Map<String,Object>> amountDue = new ArrayList<Map<String,Object>>();
+
+			try {
+				vehicleIdList = namedJdbcTemplate.query(QueryConstants.GET_CUST_VEHICLE_ID, customerMap, new CustVehicleMapper());
+				Map<String,String> vehicle = new HashMap<String,String>();
+				vehicle.put("vehicleId", (String)vehicleIdList.get(0).get("vehicleId"));
+				
+				namedJdbcTemplate.update(QueryConstants.UPDATE_AVAILABLE_STATUS, vehicle);
+				amountDue = namedJdbcTemplate.query(QueryConstants.GET_AMOUNT, vehicle, new AmountMapper());
+			}catch (Exception e) {
+				System.out.println("Exception while fetching all cars:"+e.getMessage());
+			}
+			
+		
+		return (String)amountDue.get(0).get("amountDue");
 	}
 }

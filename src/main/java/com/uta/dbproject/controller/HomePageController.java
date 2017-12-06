@@ -29,6 +29,9 @@ import com.uta.dbproject.model.Customer;
 import com.uta.dbproject.model.Rental;
 import com.uta.dbproject.services.CarServiceImpl;
 import com.uta.dbproject.services.CustomerServiceImpl;
+import com.uta.dbproject.services.OwnerService;
+import com.uta.dbproject.services.RentalService;
+import com.uta.dbproject.utility.DataUploadUtility;
 
 import net.sf.json.JSON;
 import net.sf.json.JSONSerializer;
@@ -40,7 +43,19 @@ public class HomePageController {
 	CustomerServiceImpl customerService;
 	
 	@Autowired
+	DataUploadUtility dataUpload;
+	
+	@Autowired
 	CarServiceImpl carService;
+	
+	@Autowired
+	RentalService carRentalService;
+	
+	@Autowired
+	OwnerService ownerService;
+	
+	private Rental rental1;
+
 
 	@RequestMapping(value = "/homepage.html", method = RequestMethod.GET)
 	public ModelAndView showIndexPage() {
@@ -56,9 +71,7 @@ public class HomePageController {
 
 	@RequestMapping(value = "/savecustomer.html", method = RequestMethod.POST)
 	public ModelAndView saveNewCustomer(@ModelAttribute("customer") Customer customer, ModelMap model) {
-		
 		int result = customerService.saveCustomerInfo(customer);
-		
 		if(result == 1) {
 			model.addAttribute("submitMessage", "Customer saved successfully.");
 		}else {
@@ -76,7 +89,6 @@ public class HomePageController {
 	@RequestMapping(value = "/savecar.html", method = RequestMethod.POST)
 	public ModelAndView saveNewCar(@ModelAttribute("car") Car car, ModelMap model) {
 		System.out.println("inside save new car controller" + car.toString());
-		
 		int result = carService.saveCarInfoService(car);
 		if(result == 1) {
 			model.addAttribute("submitMessage", "New car saved successfully.");
@@ -93,8 +105,37 @@ public class HomePageController {
 		return new ModelAndView("rentcar");
 	}
 	
+	
+	@RequestMapping(value = "/getCarDetails.html", method = RequestMethod.POST)
+	public ModelAndView getCarDetails(HttpServletRequest request, ModelMap model) {
+		
+		System.out.println("in ajax call to get car details...");
+		
+		rental1 = new Rental();
+		System.out.println("vals:"+request.getParameter("carModel"));
+		
+		rental1.setCarModel(request.getParameter("carModel"));
+		rental1.setCarType(request.getParameter("carType"));
+		rental1.setVehicleId(request.getParameter("vehicleId"));
+		rental1.setDailyRate(request.getParameter("dailyRate"));
+		rental1.setWeeklyRate(request.getParameter("weeklyRate"));
+
+		return new ModelAndView("rentcar");
+	}
+	
+	
 	@RequestMapping(value = "/saverentcar.html", method = RequestMethod.POST)
-	public ModelAndView saveRentCarDetails(@ModelAttribute("rentcar") Rental rental, ModelMap mode) {
+	public ModelAndView saveRentCarDetails(@ModelAttribute("rentcar") Rental rental,@RequestParam("customerName")String customerName, ModelMap model) {
+		
+		rental.setCarModel(rental1.getCarModel());
+		rental.setCarType(rental1.getCarType());
+		rental.setVehicleId(rental1.getVehicleId());
+		rental.setDailyRate(rental1.getDailyRate());
+		rental.setWeeklyRate(rental1.getWeeklyRate());
+
+		int result = carRentalService.saveCarRental(rental,customerName);
+		
+		System.out.println(rental.toString());
 		return new ModelAndView("rentcar");
 	}
 
@@ -111,13 +152,8 @@ public class HomePageController {
 	public @ResponseBody String testAjax(HttpServletRequest request, ModelMap model) {
 		String carType = request.getParameter("dropdownvalue");
 		System.out.println("ajax call success:" + carType);
-		// TODO
-		// fetch data from database for cars which are avaible for rent
 		List<Map<String,Object>> carList = carService.getAvailableCars(carType);
-
 		JSON json = JSONSerializer.toJSON(carList);
-		System.out.println("JSon : "+json.toString());
-		
 		return json.toString();
 	}
 
@@ -127,27 +163,70 @@ public class HomePageController {
 		return new ModelAndView("updaterental");
 	}
 
-	@RequestMapping(value="/saveupdatedrental.html",method = RequestMethod.GET)
+	@RequestMapping(value="/saveupdatedrental.html",method = RequestMethod.POST)
 	public ModelAndView saveUpdatedRentalRates(@RequestParam("carType")String carType,@RequestParam("dailyRate")String dailyRate,@RequestParam("weeklyRate")String weeklyRate,ModelMap model) {
+		
+		System.out.println("cartype:"+carType+",dailyrate:"+dailyRate+",weeklyrate:"+weeklyRate);
 		//TODO
 		//update the db for specific car type
-		
-		model.addAttribute("updatedMessage", "Rental updated Successfully");
+		int result = carService.updateRentalRate(carType,dailyRate,weeklyRate);
+		if(result == 1) {
+			model.addAttribute("updatedMessage", "Rental Rate updated Successfully");
+		}else {
+			model.addAttribute("updatedMessage", "Failed to update Renatal Rate.");
+		}
 		return new ModelAndView("updaterental");
 	}
 	
 
 	@RequestMapping(value="/report.html",method = RequestMethod.GET)
-	public ModelAndView getReport() {
+	public ModelAndView getReport(ModelMap model) {
 		System.out.println("inside report controller");
+		
+		List<Map<String,Object>> earningList = ownerService.getEarnings();
+		model.addAttribute("earningList",earningList);
+		
 		return new ModelAndView("report");
 	}
 	
 	@RequestMapping(value="/uploaddata.html",method = RequestMethod.GET)
-	public ModelAndView uploadData() {
+	public ModelAndView uploadData(ModelMap model) {
 		System.out.println("inside update rental controller");
+		String result = dataUpload.uploadData();
+		model.addAttribute("success",result);
 		return new ModelAndView("uploaddata");
 	}
+	
+	@RequestMapping(value="/catalog.html", method = RequestMethod.GET)
+	public ModelAndView showCatalog(ModelMap model) {
+		
+		List<Map<String,Object>> getAllCustomers = customerService.fetchAllCustomerList();
+		model.addAttribute("customerList",getAllCustomers);
+		
+		List<Map<String,Object>> allCarsList = carService.getAllCars();
+		model.addAttribute("carsList",allCarsList);
+		
+		List<Map<String,Object>> allOwnersList = ownerService.getAllOwners();
+		model.addAttribute("ownerList",allOwnersList);
+		
+		return new ModelAndView("catalog");
+	
+	}
+	
+	@RequestMapping(value="/returncar.html", method = RequestMethod.GET)
+	public ModelAndView returnCar() {
+		return new ModelAndView("returncar");
+	}
+	
+	
+	@RequestMapping(value="/returncar1.html", method = RequestMethod.GET)
+	public ModelAndView saveReturnCar(@ModelAttribute("returncar") Rental rental,@RequestParam("customerName")String customerName, ModelMap model) {
+		
+		String amount = carService.returnCar(rental, customerName);
+		model.addAttribute("amount",amount);
+		return new ModelAndView("returncar");
+	}
+	
 	
 	
 }

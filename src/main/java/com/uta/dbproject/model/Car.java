@@ -8,10 +8,12 @@ public class Car {
 	private String ownedBy;
 	private String type;
 	private String ownerName;
+	private String status;
 	
+
 	public Car() {}
 	
-	public Car(String vehicleId, String model, String year, String ownedBy, String type,String ownerName) {
+	public Car(String vehicleId, String model, String year, String ownedBy, String type,String ownerName,String status) {
 		super();
 		this.vehicleId = vehicleId;
 		this.model = model;
@@ -19,6 +21,7 @@ public class Car {
 		this.ownedBy = ownedBy;
 		this.type = type;
 		this.ownerName = ownerName;
+		this.status = status;
 	}
 	
 	public String getOwnerName() {
@@ -59,11 +62,20 @@ public class Car {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	@Override
 	public String toString() {
 		return "Car [vehicleId=" + vehicleId + ", model=" + model + ", year=" + year + ", ownedBy=" + ownedBy
-				+ ", type=" + type + ", ownerName=" + ownerName+"]";
+				+ ", type=" + type + ", ownerName=" + ownerName + ", status=" + status + "]";
 	}
+
 	
 }

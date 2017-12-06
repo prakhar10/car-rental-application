@@ -26,23 +26,23 @@
 						<h4 class="panel-title" style="text-align: center">Rent a Car</h4>
 					</div>
 					<div class="panel-body">
-						<form action="saverentcar.html">
+						<form action="saverentcar.html" modelAttribute="rental" method="post">
 						<div class="form-group">
 							<label for="inlineFormCustomSelect" style="margin-top: 10px">Select Customer Type</label>
 						 	<div>
 						 		<label class="radio-inline" id="radio1" style="margin-left: 0px">
-						 	 		<input	class="form-check-input customerType" type="radio" name="type"
+						 	 		<input	class="form-check-input customerType" type="radio" name="custType"
 									id="radioIndividual" value="Individual">Individual
 								</label>
 								<label class="radio-inline " id="radio2"> <input
-									class="form-check-input customerType" type="radio" name="type"
+									class="form-check-input customerType" type="radio" name="custType"
 									id="radioCompany" value="Company">Company
 								</label>
 							</div>
 						</div>
 						<div class="form-group">
 								<label class="mr-sm-2" for="inlineFormCustomSelect" style="margin-top: 10px">Select Customer</label>
-								<div class="dropdown">
+								<div class="dropdown customerDropdown">
 									<select class="form-control customer-select mb-2 mr-sm-2 mb-sm-0"
 										id="inlineFormCustomSelect" name="customerName" >
 									</select>
@@ -57,21 +57,44 @@
 									</span> </span>
 								</div>
 							</div>
-							<div class="form-group">
-								<label for="labelStartDate">Return Date </label>
+							
+								<div class="form-group rentaltype">
+							<label for="inlineFormCustomSelect" style="margin-top: 10px">Select Rental Type</label>
+						 	<div>
+						 		<label class="radio-inline" id="radio3" style="margin-left: 0px">
+						 	 		<input	class="form-check-input daily" type="radio" name="rentalType"
+									id="radioDaily" value="Daily">Daily
+								</label>
+								<label class="radio-inline" id="radio4"> <input
+									class="form-check-input weekly" type="radio" name="rentalType"
+									id="radioWeekly" value="Weekly">Weekly
+								</label>
+							</div>
+						</div>
+							
+							<div class="form-group days">
+								<label for="labelStartDate">Number of Days</label>
 								<div class='input-group date'>
-									<input type="text" class="form-control datepicker2"
-										id="returnDate" placeholder="Pick Return date"
-										name="returnDate"><span class="input-group-addon">
-										<span class="fa fa-calendar"></span>
-									</span> </span>
+									<input type="text" class="form-control"
+										 placeholder="Number of Days"
+										name="noOfDays"><span class="input-group-addon">
+									</span>
+								</div>
+							</div>
+							<div class="form-group weeks">
+								<label for="labelStartDate">Number of Weeks</label>
+								<div class='input-group date'>
+									<input type="text" class="form-control"
+										 placeholder="Number of Weeks"
+										name="noOfWeeks"><span class="input-group-addon">
+									</span>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="mr-sm-2" for="inlineFormCustomSelect">Select Car Type</label>
-								<div class="dropdown">
+								<div class="dropdown carTypeDropDown">
 									<select class="form-control custom-select mb-2 mr-sm-2 mb-sm-0"
-										id="inlineFormCustomSelect" name="type"
+										id="inlineFormCustomSelect" name="carType"
 										onchange="getAvailableCars(this.value)">
 										<option selected></option>
 										<option value="Compact">Compact</option>
@@ -91,31 +114,19 @@
 									<thead>
 										<tr>
 											<th data-field="state" data-checkbox="true"></th>
-											<th>Car Model</th>
-											<th>Car Type</th>
-											<th>Vehicle Id</th>
-											<th> Manufacture Year</th>
-											<th>Daily Rate</th>
-											<th>Weekly Rate</th>	
+											<th name="carModel">Car Model</th>
+											<th name="carType">Car Type</th>
+											<th name="vehicleId">Vehicle Id</th>
+											<th name="year"> Manufacture Year</th>
+											<th name="dailyRate">Daily Rate</th>
+											<th name="weeklyRate">Weekly Rate</th>	
 										</tr>
 									</thead>
 									<tbody class="tablebody">
 									</tbody>
 								</table>
 							</div>
-							<div class="form-group rentaltype">
-							<label for="inlineFormCustomSelect" style="margin-top: 10px">Select Rental Type</label>
-						 	<div>
-						 		<label class="radio-inline" id="radio3" style="margin-left: 0px">
-						 	 		<input	class="form-check-input" type="radio" name="rentaltype"
-									id="radioDaily" value="Daily">Daily
-								</label>
-								<label class="radio-inline" id="radio4"> <input
-									class="form-check-input" type="radio" name="rentaltype"
-									id="radioWeekly" value="Weekly">Weekly
-								</label>
-							</div>
-						</div>
+					
 								<button class="btn btn-primary" type="submit" value="submit" name="submit">Submit</button>
 						</form>
 					</div>
@@ -125,14 +136,14 @@
 	</div>
 
 
-	<script>
+<script>
 $(document).ready(function() {
     $(".datepicker2").datepicker();
-    $(".btn").hide();
+    $('.btn').prop('disabled', true);
 	$('.tablepanel').hide();
 	
-	$('.dropdown').change(function(){
-		if($('.dropdown').click){
+	$('.carTypeDropDown').change(function(){
+		if($('.carTypeDropDown').click){
 			$('.tablepanel').show(); 
 		}
 	});
@@ -152,7 +163,7 @@ function getAvailableCars(str) {
             	$.each(data,function(index,car){
             		$('.tablebody').append("<tr><td><input type='radio' name='radioBtn'></td><td>"+car.model+"</td><td>"+car.carType+"</td><td>"+car.vehicleId+"</td><td>"+car.year+"</td><td>"+car.dailyRate+"</td><td>"+car.weeklyRate+"</td></tr>");
             	}); 
-            	$('.btn').show();
+                $('.btn').prop('disabled', false);
             },
             error : function(request, error) {
             	console.log("failure-"+error );
@@ -161,10 +172,9 @@ function getAvailableCars(str) {
         });
     }
  
-
-
 $('.customerType').click(function(){
-	var custtype = $("input[name='type']:checked").val();
+	var custtype = $("input[name='custType']:checked").val();
+	console.log("val:"+custtype);
 	$.ajax({
         "type" : "GET",
         "url" : "getcustomers.html",
@@ -174,7 +184,7 @@ $('.customerType').click(function(){
             success : function(data) {
             	$('.customer-select').html('');
             	$.each(data,function(index,name){
-            		$('.customer-select').append("<option value='name'>"+name+"</option>");
+            		$('.customer-select').append("<option value='"+name+"'>"+name+"</option>");
             	}); 
             },
             error : function(request, error) {
@@ -185,14 +195,76 @@ $('.customerType').click(function(){
 	
 });
 
-$(document).on('change', ':radio[name="radioBtn"]', function () {
-    var arOfVals = $(this).parent().nextAll().map(function () {
+var list;
+
+$(document).on('click', ':radio[name="radioBtn"]', function () {
+    list = $(this).parent().nextAll().map(function () {
         return $(this).text();
     }).get();
-    console.log("array:"+arOfVals);
-    console.log("td:"+arOfVals[0]);
-});    
     
+    
+    $.ajax({
+        "type" : "POST",
+        "url" : "getCarDetails.html",
+        "async" : true,
+        "data" : 
+        		{"carModel" : list[0],
+        		 "carType" : list[1],
+        		 "vehicleId" : list[2],
+        		 "dailyRate" : list[4],
+        		 "weeklyRate" : list[5]
+        		},
+            success : function(data) {
+            	console.log("Data sent successfully"); 
+            },
+            error : function(request, error) {
+            	console.log("failure"+ error);
+                alert("error :"+ error);
+            }
+        });
+});    
+   
+
+$('.days').hide();
+$('.weeks').hide();
+   
+$('.daily').change(function(){
+	if($('.daily').click){
+		$('.days').show(); 
+		$('.weeks').hide();
+	}
+});
+
+
+$('.weekly').change(function(){
+	if($('.weekly').click){
+		$('.weeks').show(); 
+		$('.days').hide(); 
+	}
+});
+   
+/* $('.btn').click(function(){
+	$.ajax({
+        "type" : "POST",
+        "url" : "getCarDetails.html",
+        "async" : true,
+        "data" : 
+        		{"carModel" : list[0],
+        		 "carType" : list[1],
+        		 "vehicleId" : list[2],
+        		 "dailyRate" : list[4],
+        		 "weeklyRate" : list[5]
+        		},
+            success : function(data) {
+            	console.log("Data sent successfully"); 
+            },
+            error : function(request, error) {
+            	console.log("failure"+ error);
+                alert("error :"+ error);
+            }
+        });
+	
+}); */
     
 </script>
 </body>

@@ -26,6 +26,15 @@
 	<bean id="customerDao" class="com.uta.dbproject.dao.CustomerDaoImpl"></bean>
 	<bean id="carService" class="com.uta.dbproject.services.CarServiceImpl"></bean>
 	<bean id="carDao" class="com.uta.dbproject.dao.CarDaoImpl"></bean>
+	<bean id="dataUpload" class="com.uta.dbproject.utility.DataUploadUtility"></bean>
+	<bean id="carRentalService" class="com.uta.dbproject.services.RentalServiceImpl"></bean>
+	<bean id="carRentalDao" class="com.uta.dbproject.dao.RentalDaoImpl"></bean>
+	<bean id="ownerService" class="com.uta.dbproject.services.OwnerServiceImpl"></bean>
+	<bean id="ownerDao" class="com.uta.dbproject.dao.OwnerDaoImpl"></bean>
+	
+	
+	
+	
 	
 	<bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate" >
    		 <constructor-arg ref="dataSource"/>

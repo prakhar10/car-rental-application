@@ -11,6 +11,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import com.uta.dbproject.constants.QueryConstants;
 import com.uta.dbproject.model.Car;
 import com.uta.dbproject.model.Customer;
+import com.uta.dbproject.utility.AllCarsMapper;
+import com.uta.dbproject.utility.CustomerMapper;
 
 public class CustomerDaoImpl implements CustomerDao {
 
@@ -74,5 +76,22 @@ public class CustomerDaoImpl implements CustomerDao {
 		}
 		
 		return customerList;
+	}
+
+
+	@Override
+	public List<Map<String, Object>> fetchAllCustomerList() {
+
+		List<Map<String,Object>> allCustomerList = new ArrayList<Map<String,Object>>();
+		
+		try {
+			allCustomerList = namedJdbcTemplate.query(QueryConstants.GET_ALL_CUSTOMER_LIST, new HashMap<String,Object>(), new CustomerMapper());
+		}catch (Exception e) {
+			System.out.println("Exception while fetching all customers:"+e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return allCustomerList;
+	
 	}
 }

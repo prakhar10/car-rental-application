@@ -35,6 +35,7 @@
         <li><a href="newcustomer.html">Add Customer <span class="sr-only">(current)</span></a></li>
       	<li><a href="newcar.html">Add Car</a></li>
       	<li><a href="rentcar.html">Rent a Car</a></li>
+      	<li><a href="returncar.html">Return Car</a></li>
       	<li><a href="updaterental.html">Update Rental Rates</a></li>
       	<li><a href="report.html">Weekly Report</a></li>
       	<li><a href="catalog.html">Catalog</a></li>
