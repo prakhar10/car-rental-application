@@ -26,6 +26,5 @@ The following are the tasks for the third part of the project:
 5.	Each transaction should have a user friendly interface to enter the information needed by the transaction. This can either be a Web-based interface, a command line interface, or a forms interface.
 6.	Test your transactions by adding a few new customers, cars, reservations, by changing some rental rates and reservations rates.
 
-This project is in progress and has not been completed.
 
 
